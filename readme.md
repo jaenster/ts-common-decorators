@@ -1,3 +1,5 @@
+[![npm version](https://d25lcipzij17d.cloudfront.net/badge.svg?id=js&type=6&v=0.9.1)](https://www.npmjs.com/package/ts-common-decorators) ![CI](https://github.com/jaenster/ts-common-decorators/workflows/CI/badge.svg)
+
 # Common decorators
 
 Just some decorators that don't need any dependencies, yet are very handy.
