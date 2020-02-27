@@ -1,4 +1,4 @@
-import {Cached} from '../src';
+import {Cached} from '../bin';
 import {expect} from 'chai';
 
 describe('cache', function () {

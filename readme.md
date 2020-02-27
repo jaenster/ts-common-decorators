@@ -1,4 +1,4 @@
-[![npm version](https://d25lcipzij17d.cloudfront.net/badge.svg?id=js&type=6&v=0.9.2)](https://www.npmjs.com/package/ts-common-decorators) ![CI](https://github.com/jaenster/ts-common-decorators/workflows/CI/badge.svg)
+[![npm version](https://d25lcipzij17d.cloudfront.net/badge.svg?id=js&type=6&v=0.9.4)](https://www.npmjs.com/package/ts-common-decorators) ![CI](https://github.com/jaenster/ts-common-decorators/workflows/CI/badge.svg)
 
 # Common decorators
 
@@ -29,6 +29,7 @@ foo2.bar(); // Logs first time called
 
 ```typescript
 import {Static} from 'ts-common-decorators';
+
 @Static
 class Foo {
     static bar() {
@@ -40,5 +41,20 @@ class Foo {
 const foo = new Foo;
 ```
 
+# Metadata
+
+```typescript
+import {MetaData} from "ts-common-decorators";
+
+class Foo {
+    @MetaData({something: 'special'})
+    bar() {
+    
+    }
+}
+const foo = new Foo();
+
+console.log(MetaData.get(foo.bar).something); // special
+```
 # More
 More to come in the future

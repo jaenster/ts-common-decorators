@@ -1,4 +1,4 @@
-import {Static} from '../src';
+import {Static} from '../bin';
 import {expect} from 'chai';
 
 describe('static', function () {
