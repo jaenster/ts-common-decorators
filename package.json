@@ -1,12 +1,13 @@
 {
   "name": "ts-common-decorators",
-  "version": "0.9.1",
+  "version": "0.9.2",
   "description": "Some decorators",
   "main": "bin/index.js",
   "types": "bin/index.d.ts",
   "scripts": {
-    "test": "mocha -r ts-node/register test/**/*.test.ts",
-    "build": "yarn && yarn test && tsc"
+    "test": "yarn && mocha -r ts-node/register test/**/*.test.ts",
+    "coverage": "yarn && nyc npm run test",
+    "build": "yarn && tsc"
   },
   "keywords": [
     "typescript",
