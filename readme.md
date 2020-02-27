@@ -1,4 +1,4 @@
-[![npm version](https://d25lcipzij17d.cloudfront.net/badge.svg?id=js&type=6&v=0.9.1)](https://www.npmjs.com/package/ts-common-decorators) ![CI](https://github.com/jaenster/ts-common-decorators/workflows/CI/badge.svg)
+[![npm version](https://d25lcipzij17d.cloudfront.net/badge.svg?id=js&type=6&v=0.9.2)](https://www.npmjs.com/package/ts-common-decorators) ![CI](https://github.com/jaenster/ts-common-decorators/workflows/CI/badge.svg)
 
 # Common decorators
 
@@ -23,6 +23,21 @@ foo.bar(); // Doesnt log that, as the value is cached now
 
 const foo2 = new Foo;
 foo2.bar(); // Logs first time called
+```
+
+# Static
+
+```typescript
+import {Static} from 'ts-common-decorators';
+@Static
+class Foo {
+    static bar() {
+    
+    }
+}
+
+// Error, can't call new on a static class
+const foo = new Foo;
 ```
 
 # More
