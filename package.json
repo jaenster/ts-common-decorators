@@ -1,6 +1,6 @@
 {
   "name": "ts-common-decorators",
-  "version": "0.9.2",
+  "version": "0.9.3",
   "description": "Some decorators",
   "main": "bin/index.js",
   "types": "bin/index.d.ts",
