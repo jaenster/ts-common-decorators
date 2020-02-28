@@ -18,7 +18,7 @@
       "esnext"
     ],
     "inlineSourceMap": true,
-    "outDir": "./bin",
+    "outDir": ".",
     "baseUrl": "."
   },
   "include": [

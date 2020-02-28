@@ -37,14 +37,16 @@ export function Static(constructor: any) {
 }
 
 export type AnyObject = { [data: string]: any, [data: number]: any };
+
 interface MetaDataGetter {
-    get(target:any): AnyObject;
+    get(target: any): AnyObject;
 }
+
 export type Metadata = (metadata?: AnyObject) => ((target: any, propertyKey?: string, descriptor?: PropertyDescriptor | undefined) => PropertyDescriptor | void);
-export const MetaData: Metadata&MetaDataGetter = ((function () {
+export const MetaData: Metadata & MetaDataGetter = ((function () {
 
     const metaDataKey = Symbol('MetaData');
-    const MetaData = function (metadata: AnyObject={}) {
+    const MetaData = function (metadata: AnyObject = {}) {
         return function (target: any, propertyKey?: string | number | symbol, descriptor?: PropertyDescriptor | undefined): PropertyDescriptor | void {
             const on = typeof propertyKey !== 'undefined' ? target[propertyKey] : target;
             if (!on.hasOwnProperty(metaDataKey)) on[metaDataKey] = {};
@@ -55,3 +57,17 @@ export const MetaData: Metadata&MetaDataGetter = ((function () {
     MetaData.get = (target: any): AnyObject => Object.assign({}, target && target.hasOwnProperty(metaDataKey) && target[metaDataKey] || {});
     return MetaData;
 }))();
+
+export const Logger = (function () {
+    function Logger(cb?: Function) {
+        return function (target: any, propertyKey?: string | number | symbol, descriptor?: PropertyDescriptor | undefined): PropertyDescriptor | void {
+            ((origin) => descriptor.value = function (...args) {
+                (cb || Logger.defaultLogger)(origin);
+                origin.apply(this, args)
+            })(descriptor.value)
+        }
+    }
+
+    Logger.defaultLogger = console.count;
+    return Logger;
+})();

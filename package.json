@@ -1,18 +1,21 @@
 {
   "name": "ts-common-decorators",
-  "version": "0.9.4",
+  "version": "0.9.5",
   "description": "Some decorators",
   "main": "bin/index.js",
   "types": "bin/index.d.ts",
   "scripts": {
-    "test": "yarn && mocha -r ts-node/register test/**/*.test.ts",
+    "test": "yarn && tsc && mocha -r ts-node/register test/**/*.test.ts",
     "coverage": "yarn && tsc && nyc npm run test",
     "build": "yarn && tsc"
   },
   "keywords": [
     "typescript",
     "decorators",
-    "cached"
+    "cached",
+    "logger",
+    "metadata",
+    "static"
   ],
   "repository": {
     "type": "git",
@@ -30,7 +33,6 @@
     "mocha": "^7.0.1",
     "nyc": "^15.0.0",
     "ts-node": "^8.6.2",
-    "tsc": "^1.20150623.0",
     "typescript": "^3.8.2"
   }
 }
