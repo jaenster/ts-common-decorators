@@ -1,15 +1,12 @@
+import {Logger} from "../bin"; // loads with this define function
 import {expect} from 'chai';
-let ran2 = 0;
-const old = console.count;
-console.count = () => ++ran2; // override default count
-import {Logger} from "../src"; // loads with this define function
-console.count = old; // put it back
 
 describe('logger', function () {
 
     it('logger', function () {
-        let ran = 0;
+        let ran = 0,ran2 = 0;
 
+        Logger.defaultLogger = () => ++ran2;
 
         class Foo extends Object{
             @Logger(() => ++ran)

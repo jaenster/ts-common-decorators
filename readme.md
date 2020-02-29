@@ -1,4 +1,4 @@
-[![npm version](https://d25lcipzij17d.cloudfront.net/badge.svg?id=js&type=6&v=0.9.5)](https://www.npmjs.com/package/ts-common-decorators) ![CI](https://github.com/jaenster/ts-common-decorators/workflows/CI/badge.svg)
+[![npm version](https://d25lcipzij17d.cloudfront.net/badge.svg?id=js&type=6&v=0.9.7)](https://www.npmjs.com/package/ts-common-decorators) ![CI](https://github.com/jaenster/ts-common-decorators/workflows/CI/badge.svg)
 
 # Common decorators
 
@@ -26,6 +26,41 @@ const model1 = foo.bar(1); // Logs first time called
 const model1Again = foo.bar(1); // Doesnt fetch model1 again, its cached!
 
 console.log(model1 === model1Again); // true, refers to the same object
+```
+
+# Promise once
+Don't you hate it to see something is promises twice at the same time? If functions are requesting a model, its sad it retrieves it twice from the database. So, @PromiseOnce ensures you it only fetches it once
+
+Take a look at the example. While only 2 requests will take place, /model/1 and /model/7. While model 1 is called twice
+```typescript
+import {PromiseOnce} from 'ts-common-decorators';
+import Axios from 'axios';
+
+class Foo {
+    @PromiseOnce
+    bar(id? :number) {
+        return Axios({
+            method: 'get',
+            url: '/model/'+id,
+        })
+    }
+}
+
+const foo = new Foo();
+
+const fetch1 = foo.bar(1), 
+    fetch2 = foo.bar(1),
+
+// Fetching another model
+    fetch3 = foo.bar(7);
+
+Promise.all([fetch1,fetch2,fetch3]).then(data => {
+    // Both fetch 1 and 2 are a request for model's instance 1.
+    console.log('fetch 1 and 2 refer to the same object?', data[0] === data[1]); // true
+
+    // fetch 3 is a request for model's instance 7.
+    console.log('fetch 1 and 3 refer to the same object?',data[0] === data[2]); // false
+});
 ```
 
 # Static
