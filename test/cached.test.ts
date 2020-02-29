@@ -133,4 +133,48 @@ describe('cache', function () {
         expect(cache3).equal(2);
         expect(cache4).equal(3);
     });
+
+    it('cacheStatic', function () {
+        class Foo {
+            static counter = 0;
+
+            @Cached({uniquePerKey: true})
+            static bar(id ?: number) {
+                return ++Foo.counter;
+            }
+        }
+
+        let test = Foo.bar(1);
+        expect(test).equal(1);
+        test = Foo.bar(1);
+        expect(test).equal(1);
+        test = Foo.bar(2);
+        expect(test).equal(2);
+    });
+
+    it('cacheStatic', function () {
+
+        class Bar {
+            static whatever = 0;
+            static bar(id? :number) {
+                return --this.whatever;
+            }
+        }
+
+        class Foo extends Bar{
+            static counter = 0;
+
+            @Cached({uniquePerKey: true})
+            static bar(id ?: number) {
+                return ++Foo.counter;
+            }
+        }
+
+        let test = Foo.bar(1);
+        expect(test).equal(1);
+        test = Foo.bar(1);
+        expect(test).equal(1);
+        test = Foo.bar(2);
+        expect(test).equal(2);
+    })
 });
