@@ -77,4 +77,30 @@ describe('promiseOnce', function () {
         // yet it should be the same as the second
         expect(test === test2).equal(true);
     });
+
+    it('multipleInstances', async function () {
+
+        let resolverBar;
+
+        class Foo {
+            @PromiseOnce()
+            bar(id?: number) {
+                return new Promise((resolve, reject) => {
+                    resolverBar = resolverBar || resolve;
+                });
+            }
+
+        }
+
+        const foo = new Foo();
+        const foo2 = new Foo();
+
+        const promisers: Promise<any>[] = [foo.bar(), foo.bar(),/* foo 2 = another instance */ foo2.bar()];
+
+        expect(
+            promisers // Loop over all promises. Filter out those that are not the same as the first
+                .filter((el, index, self) => el === self[0])
+                .length // give back the length
+        ).equal(2); // Should be 2, as they are all equal except the last
+    });
 });
