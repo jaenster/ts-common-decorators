@@ -1,8 +1,29 @@
-[![npm version](https://d25lcipzij17d.cloudfront.net/badge.svg?id=js&type=6&v=0.9.8)](https://www.npmjs.com/package/ts-common-decorators) ![CI](https://github.com/jaenster/ts-common-decorators/workflows/CI/badge.svg)
+[![npm version](https://d25lcipzij17d.cloudfront.net/badge.svg?id=js&type=6&v=0.9.9)](https://www.npmjs.com/package/ts-common-decorators) ![CI](https://github.com/jaenster/ts-common-decorators/workflows/CI/badge.svg)
 
 # Common decorators
 
 Just some decorators that don't need any dependencies, yet are very handy.
+
+# Observe
+Just a simple non recursive observer, very handy for simple use cases
+```typescript
+import {Observe} from 'ts-common-decorators'
+import Axios from 'axios';
+class Model {
+    public id: number;
+    
+    @Observe(Model.prototype.toBackend)
+    public someField: string = '';
+    
+    
+    toBackend() {
+        Axios.post('/model/put/'+this.id,this);
+    }
+}
+
+const model = new Model();
+model.someField = 'some data';
+```
 
 # Cached
 Why call this 

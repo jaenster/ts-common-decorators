@@ -5,7 +5,7 @@ export function PromiseOnce(settings: PromiseOnceSettings = {}) {
     return function (target: object, propertyKey: string, descriptor: PropertyDescriptor): PropertyDescriptor {
         let PromiseSym = Symbol('PromiseOnce');
         let CounterSym = Symbol('PromiseOnceCounter');
-        let emptySym = Symbol('noArguments')
+        let emptySym = Symbol('noArguments');
         let counter = 0;
         ((origin: Function) => descriptor.value = function (...args) {
 
