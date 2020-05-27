@@ -1,4 +1,4 @@
-[![npm version](https://d25lcipzij17d.cloudfront.net/badge.svg?id=js&type=6&v=0.9.9)](https://www.npmjs.com/package/ts-common-decorators) ![CI](https://github.com/jaenster/ts-common-decorators/workflows/CI/badge.svg)
+[![npm version](https://d25lcipzij17d.cloudfront.net/badge.svg?id=js&type=6&v=0.9.10)](https://www.npmjs.com/package/ts-common-decorators) ![CI](https://github.com/jaenster/ts-common-decorators/workflows/CI/badge.svg)
 
 # Common decorators
 
@@ -26,7 +26,7 @@ model.someField = 'some data';
 ```
 
 # Cached
-Why call this 
+Why call should we call this twice?
 ```typescript
 import {Cached} from 'ts-common-decorators';
 import Axios from 'axios';
@@ -47,6 +47,37 @@ const model1 = foo.bar(1); // Logs first time called
 const model1Again = foo.bar(1); // Doesnt fetch model1 again, its cached!
 
 console.log(model1 === model1Again); // true, refers to the same object
+```
+
+# QueuedPromise
+Javascript is async, but not everything is javascript. From time to time, you want a promise that is queued. Without making a massive callback hell
+```typescript
+import {QueuedPromise} from 'ts-common-decorators';
+class Person {
+    name: string;
+    constructor(name: string) {
+        this.name = name
+    }
+
+    @QueuedPromise()
+    async assignTask(task: string) : Promise<any> {
+        console.log('['+this.name+'] start: '+task); // did task
+        // wait 300 ms to simulate some "work"
+        await new Promise(resolve => setTimeout(() => resolve(),300));
+        console.log('['+this.name+'] done: '+task); // did task
+    }
+
+}
+
+const alice = new Person('alice');
+const bob = new Person('bob');
+[alice,bob].forEach((self,i,everyone) => {
+    self.assignTask('write code');
+    self.assignTask('test code');
+    self.assignTask('fix bug');
+    self.assignTask('commit code');
+    self.assignTask('push code').then(() => everyone[1-i].assignTask('review code'));
+});
 ```
 
 # Promise once
