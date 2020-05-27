@@ -43,7 +43,7 @@ describe('queuedPromise', function () {
 
         // wrap test in promise, so chai waits for expect to be called
         await new Promise(resolve => {
-            [1, 2, 3, 4, 5].map((e, i) => foo.bar())[4].finally(() => {
+            [1, 2, 3, 4, 5].map((e, i) => foo.bar())[4].then(() => {
 
                 // If queueing worked correctly, it took atleast 4 times the delay.
                 // If queuing didnt work, it did it async, so the delay would be 1x the delay
@@ -58,7 +58,7 @@ describe('queuedPromise', function () {
         // reset the timer =)
         startTimeQue = (new Date).getTime();
         return new Promise(resolve => {
-            [1, 2, 3, 4, 5].map((e, i) => foo.baz())[4].finally(() => {
+            [1, 2, 3, 4, 5].map((e, i) => foo.baz())[4].then(() => {
 
                 // now we dont queue, we expect to be run less as 1x (and a bit) of the delay, as its async
                 expect((new Date).getTime() - startTimeQue).lessThan(delay * 1.20);
