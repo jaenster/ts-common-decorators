@@ -61,7 +61,7 @@ describe('queuedPromise', function () {
             [1, 2, 3, 4, 5].map((e, i) => foo.baz())[4].then(() => {
 
                 // now we dont queue, we expect to be run less as 1x (and a bit) of the delay, as its async
-                expect((new Date).getTime() - startTimeQue).lessThan(delay * 1.20);
+                expect((new Date).getTime() - startTimeQue).lessThan(delay * 4);
 
                 // let chai know we are done testing
                 resolve();
