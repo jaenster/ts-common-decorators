@@ -28,15 +28,16 @@ export function QueuedPromise(settings: QueuedSettings = {}) {
             const ret = new Promise((resolve, reject) => {
                 tmp = () => {
                     ret[runSymbol] = () => {
+                        const final = () => {
+                            this[queue][parametersUniqueKey].queue.shift();
+                            next();
+                        }
                         // run it
                         origin.apply(this, args)
                             .then(res => resolve(res))
+                            .then(final)
                             .catch(rej => reject(rej))
-                            .finally(() => {
-                                console.log('removing from queue');
-                                this[queue][parametersUniqueKey].queue.shift();
-                                next();
-                            });
+                            .catch(final)
                     };
 
                     this[queue][parametersUniqueKey].queue.push(ret);
