@@ -5,7 +5,7 @@ describe('queuedPromise', function () {
 
     it('general test', async function () {
 
-        let delay = 250;
+        let delay = 30;
 
         let i = 0;
 
