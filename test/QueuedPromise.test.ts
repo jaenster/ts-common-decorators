@@ -1,4 +1,4 @@
-import {QueuedPromise} from '../src';
+import {QueuedPromise} from '../bin';
 import {expect} from 'chai';
 
 describe('queuedPromise', function () {
